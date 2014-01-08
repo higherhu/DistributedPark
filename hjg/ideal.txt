@@ -1,0 +1,24 @@
+改程序可以为出口或入口，由调用参数决定。
+首次调用时，需设置3个参数：出入口编号、总车位数、此处为入口还是出口。
+其中，控制信息必须为1，表示由此进程设置三个数目。
+调用格式：
+java hjg.DisPark gate_no. total_num entry/exit
+调用后，申请空闲端口作为自己与其他进行通信的端口，并输出该端口。
+然后进行对应的功能设置（入口或出口）。
+
+之后调用时，参数最少为3个，包含：控制信息、功能、已存在出入口的地址（ip：port）
+其中，控制信息不能为1！
+调用格式：
+java hjg.DisPark gate_no. entry/exit addr ...
+调用后，进行首先与已存在进程进行通信（通过输入的地址），获取总车位数、入口数、出口数、空闲车位数，
+然后进行对应功能设置。
+
+
+message:
+							request		release			exit			add					查询车位数返回的消息							reply the request
+messageType：		1					2				3				4							车位总数												6
+time：						。。。			。。			。。										当前时间												time
+source：					。。。			。。			。。			新增gate的no		入口数													gate no
+sourceType：			。。。			。。			。。			新增gate的type		出口数			4、5有用							。。
+String addr：			。。。			。。			。。			。。						。。					IP：port，4有用			。。
+int unoccupied：		。。。			。。			。。			。。						剩余车位数		5有用							。。
